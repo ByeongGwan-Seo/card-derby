@@ -32,6 +32,8 @@
   - [x] GamePage作成 (`pages/GamePage.tsx`)
   - [x] App.tsx更新 (RouterProvider)
 
-- [ ] **Phase 8: 検証**
-  - [ ] 自動テスト/動作確認
-  - [ ] 手動検証
+- [x] **Phase 8: Publishing & Deployment**
+  - [x] Git初期化 & コミット
+  - [x] GitHubリポジトリへのプッシュ
+  - [x] Vite設定 (`base` path)
+  - [x] GitHub Actions Workflow作成 (`.github/workflows/deploy.yml`)

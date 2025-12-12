@@ -1,4 +1,5 @@
 import { useState } from 'react' // React hooks
+import { Link } from '@tanstack/react-router'
 import { Card, Tile, Button } from '../components/atoms' // Atomsコンポーネント
 import { PlayerField, ActionField, GameResult, ProceedingCardArea } from '../components/molecules' // Moleculesコンポーネント
 import type { ActionCard } from '../types'
@@ -310,12 +311,12 @@ export const LibraryPage = () => {
 
             {/* フッター */}
             <footer className="mt-8 text-center">
-                <button
-                    className="px-8 py-4 text-lg font-semibold bg-white text-indigo-600 rounded-lg opacity-50 cursor-not-allowed"
-                    disabled
+                <Link
+                    to="/"
+                    className="px-8 py-4 text-lg font-semibold bg-white text-indigo-600 rounded-lg hover:bg-gray-100 transition-colors shadow-md inline-block"
                 >
-                    ゲームページへ（後で実装）
-                </button>
+                    Back to Game
+                </Link>
             </footer>
         </div>
     )

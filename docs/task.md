@@ -27,8 +27,10 @@
 
 - [ ] **Phase 7: Pages & Library**
   - [x] LibraryPage作成 (`pages/LibraryPage.tsx`)
+  - [ ] **[NEW]** TanStack Router導入 (`@tanstack/react-router`)
+  - [ ] **[NEW]** ルート定義 (URL-Driven Modal / Slide-over)
   - [ ] GamePage作成 (`pages/GamePage.tsx`)
-  - [ ] ルーティング/ページ切り替え実装 (`App.tsx` update)
+  - [ ] App.tsx更新 (RouterProvider)
 
 - [ ] **Phase 8: 検証**
   - [ ] 自動テスト/動作確認

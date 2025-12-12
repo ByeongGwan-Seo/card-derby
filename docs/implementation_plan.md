@@ -6,7 +6,7 @@
 |フレームワーク|Vite|
 |言語|TypeScript|
 |アーキテクト|Atomic Design with custom hook|
-|ライブラリー<br>（必要に応じて追加）|React19<br>motion(Not framer-motion)<br>Tailwind CSS|
+|ライブラリー<br>（必要に応じて追加）|React19<br>motion(Not framer-motion)<br>Tailwind CSS<br>TanStack Router|
 
 ### 実装時必ず守ること（一番大事）
 - 実装前に必ず確認を得てから実装すること
@@ -277,9 +277,22 @@ src/
 ---
 
 ### フェーズ7: Pages & Library (進行中)
+#### [NEW] ルーター導入
+- パッケージ追加: `@tanstack/react-router`, `@tanstack/router-devtools`
+- ルーティング設定:
+  - RootRoute作成
+  - ページルート作成
+  - App.tsxでのRouterProvider設定
 #### [NEW] [GamePage.tsx](file:///Users/gomserker/Desktop/card-derby/src/pages/GamePage.tsx)
 - メインゲームページ
-- ライブラリページへの切り替えボタン
+- ライブラリページへの切り替えボタン（Linkコンポーネント使用）
+
+#### [NEW] [router.tsx](file:///Users/gomserker/Desktop/card-derby/src/router.tsx)
+- TanStack Routerのルート定義
+- ルート:
+  - `/`: GamePage（ベース）
+  - `/library`: LibraryPage（モーダル/サイドバーとしてGamePageの上に表示）
+- devtools導入
 
 #### [NEW] [LibraryPage.tsx](file:///Users/gomserker/Desktop/card-derby/src/pages/LibraryPage.tsx)
 - コンポーネントライブラリページ
@@ -288,7 +301,7 @@ src/
   - Moleculesサブページ（PlayerField、ActionField等の表示）
   - Organismsサブページ（GameBoard等の表示）
 - 各コンポーネントのサイズバリエーション確認用セクション
-- ゲームページへの切り替えボタン
+- ゲームページへの切り替えボタン（Linkコンポーネント使用）
 
 ---
 

@@ -1,12 +1,12 @@
-import { useState, useCallback, useEffect } from 'react' // React hooks
-import type { Suit, PlayerCard, ActionCard, ProceedingCard, GameState, ActionHistory } from '../types' // 型定義
-import { SUITS, START_ROW, GOAL_ROW, ACTION_CARD_ROWS } from '../utils' // 定数
+import { useState, useCallback, useEffect } from 'react'
+import type { Suit, PlayerCard, ActionCard, ProceedingCard, GameState, ActionHistory } from '../types'
+import { SUITS, START_ROW, GOAL_ROW, ACTION_CARD_ROWS } from '../utils'
 
 /**
  * ゲーム初期状態を生成
  */
 const createInitialGameState = (): GameState => {
-    // プレイヤーカードの初期化（4枚、全てスタート地点）
+    // プレイヤーカード
     const playerCards: PlayerCard[] = SUITS.map((suit, index) => ({
         id: `player-${suit}`,
         suit,
@@ -14,26 +14,26 @@ const createInitialGameState = (): GameState => {
         state: 'face-up' as const,
     }))
 
-    // アクションカードの初期化（2-5行目に各1枚、紋様はランダム）
-    // 紋様リストをシャッフル
+    // アクションカード（シャッフル）
     const shuffledSuits = [...SUITS].sort(() => Math.random() - 0.5)
-
+    // 初期状態では clickable: false (まだ誰も到達していない)
     const actionCards: ActionCard[] = ACTION_CARD_ROWS.map((row, index) => ({
         id: `action-${row}`,
         suit: shuffledSuits[index],
         row,
         state: 'face-down' as const,
         triggered: false,
+        clickable: false,
     }))
 
-    // 進行カードの初期化
+    // 進行カード
     const proceedingCard: ProceedingCard = {
         id: 'proceeding',
         suit: null,
         state: 'face-down',
     }
 
-    // アクション履歴の初期化
+    // アクション履歴
     const actionHistory: ActionHistory = {
         row2: false,
         row3: false,
@@ -52,7 +52,7 @@ const createInitialGameState = (): GameState => {
 }
 
 /**
- * ゲームロジックを管理するカスタムフック
+ * ゲームロジックフック
  */
 export const useGameLogic = () => {
     const [gameState, setGameState] = useState<GameState>(createInitialGameState)
@@ -67,28 +67,35 @@ export const useGameLogic = () => {
 
     /**
      * 進行カードをクリックした時の処理
-     * - カードをめくる
-     * - プレイヤーを移動させる
      */
     const handleProceedingCardClick = useCallback(() => {
         if (gameState.isGameOver) return
 
         setGameState(prev => {
-            // 1. 進行カードをランダムに決定
             const suit = drawProceedingCard()
 
-            // 2. 該当カードを前進させる新しいPlayerCardsを作成
+            // 1. プレイヤー移動（新しい位置計算）
             const newPlayerCards = prev.playerCards.map(card =>
                 card.suit === suit
                     ? { ...card, position: { ...card.position, y: card.position.y - 1 } }
                     : card
             )
 
-            // 3. 状態更新（進行カードもFace-upのまま維持）
+            // 2. ActionCardのClickable状態を即時更新
+            const updatedActionCards = prev.actionCards.map(card => {
+                // 既にめくられているカードはクリック不可
+                if (card.state === 'face-up') return { ...card, clickable: false }
+
+                // 全プレイヤーがこの行より上(y値が小さいor同じ)にいるか
+                const allReached = newPlayerCards.every(p => p.position.y <= card.row)
+                return { ...card, clickable: allReached }
+            })
+
             return {
                 ...prev,
                 proceedingCard: { ...prev.proceedingCard, suit, state: 'face-up' },
                 playerCards: newPlayerCards,
+                actionCards: updatedActionCards
             }
         })
     }, [gameState.isGameOver, drawProceedingCard])
@@ -99,69 +106,73 @@ export const useGameLogic = () => {
     const handleActionCardClick = useCallback((rowNum: number) => {
         if (gameState.isGameOver) return
 
-        // 既に発動済みなら何もしない
+        // 既に発動済みなら無視
         const key = `row${rowNum}` as keyof ActionHistory
         if (gameState.actionHistory[key]) return
 
-        // 全員がその行以上に到達しているかチェック
+        // 条件再チェック (念のため)
         const allReached = gameState.playerCards.every(card => card.position.y <= rowNum)
-        if (!allReached) {
-            console.log("Not all players reached yet.")
-            return // 条件未達ならめくれない
-        }
+        if (!allReached) return
 
-        // --- アクション発動処理 ---
-        const actionCard = gameState.actionCards.find(c => c.row === rowNum)
-        if (!actionCard) return
-
-        const penaltySuit = actionCard.suit
-
+        // 発動処理
         setGameState(prev => {
-            // 状態更新: 履歴ON, カードOpen, ペナルティ適用
+            const actionCard = prev.actionCards.find(c => c.row === rowNum)
+            if (!actionCard) return prev
+
+            const penaltySuit = actionCard.suit
+
+            // 1. ActionCard更新 (Open, Triggered, Not Clickable)
             const newActionCards = prev.actionCards.map(c =>
-                c.row === rowNum ? { ...c, state: 'face-up' as const, triggered: true } : c
+                c.row === rowNum ? { ...c, state: 'face-up' as const, triggered: true, clickable: false } : c
             )
 
+            // 2. ペナルティ適用 (プレイヤー移動)
             const newPlayerCards = prev.playerCards.map(c =>
                 c.suit === penaltySuit
                     ? { ...c, position: { ...c.position, y: Math.min(c.position.y + 1, START_ROW) } }
                     : c
             )
 
+            // 3. ペナルティで後退した結果、他の未発動アクションの条件が崩れる可能性があるため、
+            //    全ActionCardのClickableを再評価する
+            const reevaluatedActionCards = newActionCards.map(c => {
+                if (c.state === 'face-up') return { ...c, clickable: false } // 既に開いたものは不可
+
+                const reached = newPlayerCards.every(p => p.position.y <= c.row)
+                return { ...c, clickable: reached }
+            })
+
             return {
                 ...prev,
                 actionHistory: { ...prev.actionHistory, [key]: true },
-                actionCards: newActionCards,
+                actionCards: reevaluatedActionCards,
                 playerCards: newPlayerCards,
             }
         })
 
-    }, [gameState.isGameOver, gameState.actionHistory, gameState.playerCards, gameState.actionCards])
+    }, [gameState.isGameOver, gameState.actionHistory, gameState.playerCards])
 
     /**
-     * ゲームルールの監視 (useEffect)
-     * - ここでは勝利判定のみ行う (アクションは手動)
+     * ゲーム監視 (useEffect)
+     * - 勝利判定のみ行う
      */
     useEffect(() => {
         if (gameState.isGameOver) return
 
-        // 勝利判定
-        // ゴール(GOAL_ROW = 1)に到達したプレイヤーがいるか
-        // Action: 誰かがゴールしたら即終了？それともターン終了時？
-        // 通常は即終了
         const winner = gameState.playerCards.find(card => card.position.y <= GOAL_ROW)
+
         if (winner) {
             setGameState(prev => ({
                 ...prev,
                 winner: winner.suit,
-                isGameOver: true
+                isGameOver: true,
+                // ゲーム終了時は全アクションクリック不可にするなどの処理を入れても良い
+                actionCards: prev.actionCards.map(c => ({ ...c, clickable: false }))
             }))
         }
+
     }, [gameState.playerCards, gameState.isGameOver])
 
-    /**
-     * ゲームのリसेट
-     */
     const resetGame = useCallback(() => {
         setGameState(createInitialGameState())
     }, [])
@@ -169,7 +180,7 @@ export const useGameLogic = () => {
     return {
         gameState,
         handleProceedingCardClick,
-        handleActionCardClick, // 外部に公開
+        handleActionCardClick,
         resetGame,
     }
 }

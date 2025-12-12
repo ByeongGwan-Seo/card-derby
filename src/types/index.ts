@@ -39,7 +39,8 @@ export interface ActionCard {
     suit: Suit // 紋様
     row: number // 配置されている行（2-5）
     state: CardState // 表裏状態
-    triggered: boolean // 発動済みかどうか
+    triggered: boolean // 発動済みか
+    clickable?: boolean // クリック可能か（発動条件を満たしているか）- UI表示用
 }
 
 /**

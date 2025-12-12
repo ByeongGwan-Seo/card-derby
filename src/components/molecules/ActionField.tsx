@@ -51,7 +51,7 @@ export const ActionField = ({
                             key={row}
                             type="action"
                             row={row}
-                            className="rounded-none border-0"
+                            className={`rounded-none border-0 ${card?.clickable ? 'ring-4 ring-yellow-400 ring-opacity-70 animate-pulse z-10' : ''}`}
                         >
                             {hasCard && card && (
                                 <Card

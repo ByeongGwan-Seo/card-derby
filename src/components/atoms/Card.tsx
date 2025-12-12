@@ -18,6 +18,7 @@ interface CardProps {
     animationType?: AnimationType // アニメーションタイプ
     onClick?: () => void // クリックハンドラー
     className?: string // 追加のCSSクラス
+    layoutId?: string // レイアウトアニメーション用ID
 }
 
 /**
@@ -31,7 +32,8 @@ export const Card = ({
     cardType = 'player', // デフォルトはプレイヤーカード
     animationType = 'none', // デフォルトはアニメーションなし
     onClick,
-    className = ''
+    className = '',
+    layoutId
 }: CardProps) => {
     const { width, height } = CARD_SIZES[size]
     const isFaceUp = state === 'face-up'
@@ -66,13 +68,15 @@ export const Card = ({
     return (
         <div
             className={`
-        relative perspective-1000
+        relative perspective-1000 z-10
         ${className}
       `}
             style={{ width: `${width}px`, height: `${height}px`, perspective: '1000px' }}
             onClick={onClick}
         >
             <motion.div
+                layout={!!layoutId}
+                layoutId={layoutId}
                 className={`
           relative w-full h-full
           rounded-lg shadow-lg cursor-pointer

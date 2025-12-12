@@ -270,6 +270,8 @@ src/
 
 #### 実装対象
 - Card.tsxに`animationType` prop追加
+- [x] **[FIX]** PlayerFieldでのカード移動アニメーション (`layoutId`追加)
+- [x] **[FIX]** カードの重なり順修正 (`z-index`追加)
 - ProceedingCardArea.tsxコンポーネント作成
 
 ---

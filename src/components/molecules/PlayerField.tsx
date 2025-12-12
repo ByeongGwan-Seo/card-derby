@@ -56,6 +56,7 @@ export const PlayerField = ({
                                         state={card.state}
                                         size="normal"
                                         onClick={() => onCardClick?.(card.id)}
+                                        layoutId={card.id} // 移動アニメーション用ID
                                     />
                                 )}
                             </Tile>

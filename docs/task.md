@@ -23,6 +23,7 @@
 - [x] **Phase 6: カードアニメーション**
   - [x] ProceedingCardAreaコンポーネント作成 (`components/molecules/ProceedingCardArea.tsx`)
   - [x] Cardアニメーション実装
+  - [x] PlayerCard移動アニメーション補完 (`layoutId`) & Z-index修正
 
 - [ ] **Phase 7: Pages & Library**
   - [x] LibraryPage作成 (`pages/LibraryPage.tsx`)

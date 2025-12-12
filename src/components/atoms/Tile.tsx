@@ -4,7 +4,7 @@ import { TILE_SIZE } from '../../utils' // 定数
  * タイルコンポーネントのプロパティ
  */
 interface TileProps {
-    type: 'player' | 'action' // タイルの種類
+    type: 'player' | 'action' | 'proceeding' // タイルの種類
     row?: number // 行番号（表示用、オプション）
     col?: number // 列番号（表示用、オプション）
     className?: string // 追加のCSSクラス
@@ -23,17 +23,16 @@ export const Tile = ({
     children
 }: TileProps) => {
     // タイプに応じた背景色
-    const bgColor = type === 'player'
-        ? 'bg-field-green-400' // プレイヤーフィールド：緑系
-        : 'bg-field-purple-400' // アクションフィールド：紫系
+    const bgColor =
+        type === 'player' ? 'bg-field-green-400' : // プレイヤーフィールド：緑系
+            type === 'action' ? 'bg-field-purple-400' : // アクションフィールド：紫系
+                'bg-field-orange-400' // 進行カード：オレンジ系
 
     return (
         <div
             className={`
-        relative rounded-lg border-2 border-opacity-30
+        relative flex items-center justify-center
         ${bgColor}
-        ${type === 'player' ? 'border-field-green-600' : 'border-field-purple-600'}
-        flex items-center justify-center
         transition-all duration-200
         ${className}
       `}

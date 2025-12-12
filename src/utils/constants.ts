@@ -7,8 +7,8 @@ import type { Suit, CardSize } from '../types' // 型定義
 // フィールド設定
 export const FIELD_ROWS = 6 // フィールドの行数
 export const FIELD_COLS = 4 // フィールドの列数（プレイヤー数）
-export const START_ROW = 1 // スタート地点の行
-export const GOAL_ROW = 6 // ゴール地点の行
+export const START_ROW = 6 // スタート地点の行（下から上へ）
+export const GOAL_ROW = 1 // ゴール地点の行（上）
 
 // アクションカード設定
 export const ACTION_CARD_ROWS = [2, 3, 4, 5] // アクションカードが配置される行
@@ -33,10 +33,11 @@ export const CARD_SIZES: Record<CardSize, { width: number; height: number }> = {
 
 /**
  * タイルサイズ（カードより少し大きめ）
+ * PlayerField(4列) + ActionField(1列) + 30px間隔で画面の60%以上を占める想定
  */
 export const TILE_SIZE = {
-    width: 110, // px (カードの通常サイズ + 余白)
-    height: 180, // px (カードの通常サイズ + 余白)
+    width: 220, // px (画面幅の60%以上を占めるサイズ)
+    height: 200, // px (カードの通常サイズ + 余白)
 }
 
 /**

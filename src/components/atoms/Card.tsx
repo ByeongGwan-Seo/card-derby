@@ -8,6 +8,7 @@ interface CardProps {
     suit: Suit | null // 紋様（nullの場合は裏面）
     state: CardState // 表裏状態
     size?: CardSize // サイズバリエーション
+    cardType?: 'player' | 'proceeding' // カードタイプ（プレイヤーカード or 進行カード）
     onClick?: () => void // クリックハンドラー
     className?: string // 追加のCSSクラス
 }
@@ -20,17 +21,24 @@ export const Card = ({
     suit,
     state,
     size = 'normal',
+    cardType = 'player', // デフォルトはプレイヤーカード
     onClick,
     className = ''
 }: CardProps) => {
     const { width, height } = CARD_SIZES[size]
     const isFaceUp = state === 'face-up'
 
+    // カードタイプに応じたホバーアニメーション
+    const hoverAnimation = cardType === 'proceeding'
+        ? 'hover:scale-105' // 進行カードのみ拡大アニメーション
+        : '' // プレイヤーカードはアニメーションなし
+
     return (
         <div
             className={`
         relative rounded-lg shadow-lg cursor-pointer
-        transition-all duration-300 hover:scale-105 hover:shadow-xl
+        transition-all duration-300 hover:shadow-xl
+        ${hoverAnimation}
         ${className}
       `}
             style={{ width: `${width}px`, height: `${height}px` }}

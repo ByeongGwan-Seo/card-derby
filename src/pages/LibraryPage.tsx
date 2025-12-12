@@ -1,5 +1,6 @@
 import { useState } from 'react' // React hooks
 import { Card, Tile, Button } from '../components/atoms' // Atomsコンポーネント
+import { PlayerField, ActionField, GameResult } from '../components/molecules' // Moleculesコンポーネント
 
 /**
  * コンポーネントライブラリページ
@@ -96,6 +97,12 @@ export const LibraryPage = () => {
                                     <Tile type="action" row={2} />
                                 </div>
                                 <div className="text-center">
+                                    <p className="text-sm text-gray-600 mb-2">進行カードタイル</p>
+                                    <Tile type="proceeding">
+                                        <Card suit="hearts" state="face-down" size="large" cardType="proceeding" />
+                                    </Tile>
+                                </div>
+                                <div className="text-center">
                                     <p className="text-sm text-gray-600 mb-2">カード配置例</p>
                                     <Tile type="player">
                                         <Card suit="hearts" state="face-up" size="normal" />
@@ -135,21 +142,69 @@ export const LibraryPage = () => {
                         <h2 className="text-3xl font-bold text-gray-800 mb-2">Molecules</h2>
                         <p className="text-gray-600 mb-8">複合コンポーネント（PlayerField, ActionField等）</p>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            <div className="p-6 border-2 border-gray-200 rounded-xl bg-gray-50 hover:border-indigo-500 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                                <h3 className="text-xl font-semibold text-indigo-600 mb-2">PlayerField</h3>
-                                <p className="text-gray-600 text-sm">プレイヤーフィールドコンポーネント - 実装予定</p>
+                        {/* PlayerField コンポーネント */}
+                        <div className="mb-12">
+                            <h3 className="text-2xl font-semibold text-indigo-600 mb-4">PlayerField</h3>
+                            <p className="text-sm text-gray-600 mb-4">4x6グリッド - サンプルカード配置</p>
+                            <div className="flex justify-center">
+                                <PlayerField
+                                    playerCards={[
+                                        { id: '1', suit: 'hearts', position: { x: 1, y: 6 }, state: 'face-up' },
+                                        { id: '2', suit: 'diamonds', position: { x: 2, y: 6 }, state: 'face-up' },
+                                        { id: '3', suit: 'clubs', position: { x: 3, y: 6 }, state: 'face-up' },
+                                        { id: '4', suit: 'spades', position: { x: 4, y: 6 }, state: 'face-up' },
+                                    ]}
+                                />
                             </div>
+                        </div>
 
-                            <div className="p-6 border-2 border-gray-200 rounded-xl bg-gray-50 hover:border-indigo-500 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                                <h3 className="text-xl font-semibold text-indigo-600 mb-2">ActionField</h3>
-                                <p className="text-gray-600 text-sm">アクションフィールドコンポーネント - 実装予定</p>
+                        {/* ActionField コンポーネント */}
+                        <div className="mb-12">
+                            <h3 className="text-2xl font-semibold text-indigo-600 mb-4">ActionField</h3>
+                            <p className="text-sm text-gray-600 mb-4">1x6グリッド - 2-5行目にカード配置</p>
+                            <div className="flex justify-center">
+                                <ActionField
+                                    actionCards={[
+                                        { id: 'a1', suit: 'hearts', row: 2, state: 'face-down', triggered: false },
+                                        { id: 'a2', suit: 'diamonds', row: 3, state: 'face-down', triggered: false },
+                                        { id: 'a3', suit: 'clubs', row: 4, state: 'face-down', triggered: false },
+                                        { id: 'a4', suit: 'spades', row: 5, state: 'face-down', triggered: false },
+                                    ]}
+                                />
                             </div>
+                        </div>
 
-                            <div className="p-6 border-2 border-gray-200 rounded-xl bg-gray-50 hover:border-indigo-500 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                                <h3 className="text-xl font-semibold text-indigo-600 mb-2">GameResult</h3>
-                                <p className="text-gray-600 text-sm">ゲーム結果コンポーネント - 実装予定</p>
-                            </div>
+                        {/* GameResult コンポーネント */}
+                        <div className="mb-12">
+                            <h3 className="text-2xl font-semibold text-indigo-600 mb-4">GameResult</h3>
+                            <p className="text-sm text-gray-600 mb-4">勝利画面モーダル</p>
+                            <Button
+                                variant="primary"
+                                onClick={() => {
+                                    const showResult = confirm('GameResultモーダルを表示しますか？\n（閉じるには再スタートボタンをクリック）')
+                                    if (showResult) {
+                                        // 一時的にモーダルを表示
+                                        const modal = document.createElement('div')
+                                        modal.id = 'temp-modal'
+                                        document.body.appendChild(modal)
+
+                                        import('react-dom/client').then(({ createRoot }) => {
+                                            const root = createRoot(modal)
+                                            root.render(
+                                                <GameResult
+                                                    winner="hearts"
+                                                    onRestart={() => {
+                                                        root.unmount()
+                                                        modal.remove()
+                                                    }}
+                                                />
+                                            )
+                                        })
+                                    }
+                                }}
+                            >
+                                GameResultを表示
+                            </Button>
                         </div>
                     </section>
                 )}

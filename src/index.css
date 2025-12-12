@@ -23,4 +23,15 @@
     --color-field-purple-700: #7e22ce;
     --color-field-purple-800: #6b21a8;
     --color-field-purple-900: #581c87;
+
+    --color-field-orange-50: #fff7ed;
+    --color-field-orange-100: #ffedd5;
+    --color-field-orange-200: #fed7aa;
+    --color-field-orange-300: #fdba74;
+    --color-field-orange-400: #fb923c;
+    --color-field-orange-500: #f97316;
+    --color-field-orange-600: #ea580c;
+    --color-field-orange-700: #c2410c;
+    --color-field-orange-800: #9a3412;
+    --color-field-orange-900: #7c2d12;
 }

@@ -1,13 +1,50 @@
 import { useState } from 'react' // React hooks
 import { Card, Tile, Button } from '../components/atoms' // Atomsコンポーネント
-import { PlayerField, ActionField, GameResult } from '../components/molecules' // Moleculesコンポーネント
+import { PlayerField, ActionField, GameResult, ProceedingCardArea } from '../components/molecules' // Moleculesコンポーネント
+import type { ActionCard } from '../types'
 
 /**
  * コンポーネントライブラリページ
  * 各Atomic Designレベルのコンポーネントを確認するためのページ
  */
+
+/**
+ * ActionFieldデモ用ラッパーコンポーネント
+ */
+const ActionFieldDemo = () => {
+    // 初回レンダリング時にランダムな紋様を割り当てる
+    const [cards, setCards] = useState<ActionCard[]>(() => {
+        const suits = ['hearts', 'diamonds', 'clubs', 'spades'] as const
+        const shuffledSuits = [...suits].sort(() => Math.random() - 0.5)
+
+        return [
+            { id: 'a1', suit: shuffledSuits[0], row: 2, state: 'face-down', triggered: false },
+            { id: 'a2', suit: shuffledSuits[1], row: 3, state: 'face-down', triggered: false },
+            { id: 'a3', suit: shuffledSuits[2], row: 4, state: 'face-down', triggered: false },
+            { id: 'a4', suit: shuffledSuits[3], row: 5, state: 'face-down', triggered: false },
+        ]
+    })
+
+    const handleCardClick = (cardId: string) => {
+        setCards(prev => prev.map(card =>
+            card.id === cardId
+                ? { ...card, state: card.state === 'face-up' ? 'face-down' : 'face-up' }
+                : card
+        ))
+    }
+
+    return (
+        <ActionField
+            actionCards={cards}
+            onCardClick={handleCardClick}
+        />
+    )
+}
+
 export const LibraryPage = () => {
     const [activeTab, setActiveTab] = useState<'atoms' | 'molecules' | 'organisms'>('atoms')
+    const [procState, setProcState] = useState<'face-up' | 'face-down'>('face-down') // 進行カードデモ用状態
+    const [procCardSuit, setProcCardSuit] = useState<'hearts' | 'diamonds' | 'clubs' | 'spades' | null>(null) // 進行カードデモ用紋様
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-8">
@@ -161,15 +198,42 @@ export const LibraryPage = () => {
                         {/* ActionField コンポーネント */}
                         <div className="mb-12">
                             <h3 className="text-2xl font-semibold text-indigo-600 mb-4">ActionField</h3>
-                            <p className="text-sm text-gray-600 mb-4">1x6グリッド - 2-5行目にカード配置</p>
+                            <p className="text-sm text-gray-600 mb-4">1x6グリッド - 2-5行目にカード配置（クリックでFlip確認）</p>
                             <div className="flex justify-center">
-                                <ActionField
-                                    actionCards={[
-                                        { id: 'a1', suit: 'hearts', row: 2, state: 'face-down', triggered: false },
-                                        { id: 'a2', suit: 'diamonds', row: 3, state: 'face-down', triggered: false },
-                                        { id: 'a3', suit: 'clubs', row: 4, state: 'face-down', triggered: false },
-                                        { id: 'a4', suit: 'spades', row: 5, state: 'face-down', triggered: false },
-                                    ]}
+                                <ActionFieldDemo />
+                            </div>
+                        </div>
+
+                        {/* ProceedingCardArea コンポーネント */}
+                        <div className="mb-12">
+                            <h3 className="text-2xl font-semibold text-indigo-600 mb-4">ProceedingCardArea</h3>
+                            <p className="text-sm text-gray-600 mb-4">進行カードエリア（クリックでアニメーション確認：Flip → Slide → 裏面に戻る）</p>
+                            <p className="text-xs text-gray-500 mb-4">※クリックごとにランダムな紋様が表示されます</p>
+                            <div className="flex justify-center">
+                                <ProceedingCardArea
+                                    card={{
+                                        id: 'demo-proc',
+                                        suit: procState === 'face-up' ? procCardSuit : null, // procStateがface-upの時のみ紋様を表示
+                                        state: procState
+                                    }}
+                                    onClick={() => {
+                                        if (procState === 'face-down') {
+                                            // 本来はここでランダム紋様を決定してstateにセットする
+                                            const suits: ('hearts' | 'diamonds' | 'clubs' | 'spades')[] = ['hearts', 'diamonds', 'clubs', 'spades']
+                                            const randomSuit = suits[Math.floor(Math.random() * suits.length)]
+                                            console.log('Next Random Suit:', randomSuit)
+                                            setProcCardSuit(randomSuit) // ランダムな紋様をstateにセット
+                                            setProcState('face-up')
+                                        } else {
+                                            // state='face-up'の状態でクリックされたら、スライドして消える処理が走る
+                                            // 親側はアニメーション完了を待ってstateをリセットする
+                                        }
+                                    }}
+                                    onAnimationComplete={() => {
+                                        console.log('Animation Complete')
+                                        setProcState('face-down')
+                                        setProcCardSuit(null) // 裏面に戻ったら紋様をリセット
+                                    }}
                                 />
                             </div>
                         </div>

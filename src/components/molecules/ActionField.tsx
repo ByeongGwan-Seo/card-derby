@@ -45,6 +45,8 @@ export const ActionField = ({
                                     suit={card.suit}
                                     state={card.state}
                                     size="normal"
+                                    cardType="action"
+                                    animationType="flip" // アクションカードはFlipアニメーション（必須）
                                     onClick={() => onCardClick?.(card.id)}
                                 />
                             )}

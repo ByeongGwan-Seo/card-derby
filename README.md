@@ -1,73 +1,71 @@
-# React + TypeScript + Vite
+# Trump Card Derby
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React、TypeScript、Viteを使用して構築された、トランプカードを使用したボードゲームアプリケーションです。
 
-Currently, two official plugins are available:
+## 概要
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+「Trump Card Derby」は、4つのスート（ハート、ダイヤ、クラブ、スペード）のカードがゴールを目指して競走するゲームです。プレイヤーは進行カードをめくり、出たスートのカードを進めます。途中にはアクションカードが配置されており、ゲームの展開を左右します。
 
-## React Compiler
+## 技術スタック
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **フレームワーク**: Vite
+- **言語**: TypeScript
+- **ライブラリ**: React
+- **スタイリング**: Tailwind CSS
+- **アーキテクチャ**: Atomic Design
+- **アニメーション**: Motion (または同等のライブラリ)
 
-## Expanding the ESLint configuration
+## 機能
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **プレイヤーフィールド**: 4x6のグリッドで構成されたメインのゲームボード。
+- **アクションフィールド**: 特定の行に到達すると発動するアクション（ペナルティなど）を管理。
+- **カード**:
+  - **プレイヤーカード**: レースに参加する4枚のカード。
+  - **進行カード**: プレイヤーがめくって進むカードを決めるカード。
+  - **アクションカード**: ゲームに変化を与える特殊カード。
+- **コンポーネントライブラリ**: Atomic Designに基づいたコンポーネント（Atoms, Molecules, Organisms）を確認できるライブラリページ。
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## セットアップと実行
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+プロジェクトをローカル環境で実行するには、以下の手順に従ってください。
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+1. **リポジトリのクローン**
+   ```bash
+   git clone <repository-url>
+   cd card-derby
+   ```
+
+2. **依存関係のインストール**
+   ```bash
+   npm install
+   ```
+
+3. **開発サーバーの起動**
+   ```bash
+   npm run dev
+   ```
+
+4. **ブラウザで確認**
+   ブラウザを開き、`http://localhost:5173`（または表示されたURL）にアクセスしてください。
+
+## ゲームルール
+
+1. **進行**: 進行カードをクリックしてめくり、表示されたスートのプレイヤーカードが1マス進みます。
+2. **アクション**: 全プレイヤーが特定のアクション行（2行目など）に到達すると、アクションカードが発動し、特定のスートが後退するなどの効果が発生します。
+3. **勝利条件**: 最初にゴールライン（6行目）に到達したカードが勝利となります。
+
+## ディレクトリ構造
+
 ```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+src/
+├── components/     # Atomic Designに基づくコンポーネント
+│   ├── atoms/
+│   ├── molecules/
+│   ├── organisms/
+│   └── templates/
+├── pages/          # ページコンポーネント
+├── hooks/          # カスタムフック (ゲームロジック等)
+├── types/          # 型定義
+├── utils/          # 定数・ユーティリティ
+└── App.tsx         # メインアプリケーション
 ```

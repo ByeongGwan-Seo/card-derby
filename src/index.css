@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+/* カスタムカラー定義 */
+@theme {
+    --color-field-green-50: #f0fdf4;
+    --color-field-green-100: #dcfce7;
+    --color-field-green-200: #bbf7d0;
+    --color-field-green-300: #86efac;
+    --color-field-green-400: #4ade80;
+    --color-field-green-500: #22c55e;
+    --color-field-green-600: #16a34a;
+    --color-field-green-700: #15803d;
+    --color-field-green-800: #166534;
+    --color-field-green-900: #14532d;
+
+    --color-field-purple-50: #faf5ff;
+    --color-field-purple-100: #f3e8ff;
+    --color-field-purple-200: #e9d5ff;
+    --color-field-purple-300: #d8b4fe;
+    --color-field-purple-400: #c084fc;
+    --color-field-purple-500: #a855f7;
+    --color-field-purple-600: #9333ea;
+    --color-field-purple-700: #7e22ce;
+    --color-field-purple-800: #6b21a8;
+    --color-field-purple-900: #581c87;
+}

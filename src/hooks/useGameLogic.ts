@@ -93,7 +93,13 @@ export const useGameLogic = () => {
 
             return {
                 ...prev,
-                proceedingCard: { ...prev.proceedingCard, suit, state: 'face-up' },
+                proceedingCard: {
+                    ...prev.proceedingCard,
+                    suit,
+                    state: 'face-up',
+                    // Force animation re-render by updating ID even if suit is same
+                    id: `proceeding-${Date.now()}`
+                },
                 playerCards: newPlayerCards,
                 actionCards: updatedActionCards
             }

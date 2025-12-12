@@ -36,7 +36,7 @@ export const ProceedingCardArea = ({ card, onClick }: ProceedingCardAreaProps) =
                     <AnimatePresence mode="popLayout">
                         {card.suit && (
                             <motion.div
-                                key={card.suit} // 紋様が変われば再生成 (同じ紋様連続の場合はIDが必要だが現状で対応)
+                                key={card.id} // IDが変われば再生成 (同じ紋様でもアニメーションする)
                                 className="absolute inset-0 flex justify-center items-center z-10 pointer-events-none" // クリックは一番上の透明レイヤーが受ける
                                 initial={{ x: 0, scale: 0.9, opacity: 0 }}
                                 animate={{ x: 0, scale: 1, opacity: 1 }}

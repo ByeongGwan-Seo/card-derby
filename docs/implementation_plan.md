@@ -170,7 +170,7 @@ src/
 └── main.tsx
 ```
 
-### フェーズ1: 基盤構築
+### フェーズ1: 基盤構築 (完了)
 #### [NEW] [index.ts](file:///Users/gomserker/Desktop/card-derby/src/types/index.ts)
 - トランプ紋様の型定義 (`Suit`: Hearts, Diamonds, Clubs, Spades)
 - カード状態の型定義 (`CardState`, `PlayerCard`, `ActionCard`)
@@ -186,7 +186,7 @@ src/
 
 ---
 
-### フェーズ2: Atomic Design - Atoms
+### フェーズ2: Atomic Design - Atoms (完了)
 #### [NEW] [Card.tsx](file:///Users/gomserker/Desktop/card-derby/src/components/atoms/Card.tsx)
 - カードの基本コンポーネント
 - 表裏の状態管理
@@ -210,7 +210,7 @@ src/
 
 ---
 
-### フェーズ3: Atomic Design - Molecules
+### フェーズ3: Atomic Design - Molecules (完了)
 #### [NEW] [PlayerField.tsx](file:///Users/gomserker/Desktop/card-derby/src/components/molecules/PlayerField.tsx)
 - 4x6のプレイヤーフィルド
 - タイルの配置とレイアウト
@@ -226,7 +226,7 @@ src/
 
 ---
 
-### フェーズ4: Custom Hooks
+### フェーズ4: Custom Hooks (完了)
 #### [NEW] [useGameLogic.ts](file:///Users/gomserker/Desktop/card-derby/src/hooks/useGameLogic.ts)
 - ゲームロジックの実装
 - フローチャートに基づく関数群の実装
@@ -235,7 +235,7 @@ src/
 
 ---
 
-### フェーズ5: Atomic Design - Organisms
+### フェーズ5: Atomic Design - Organisms (完了)
 #### [NEW] [GameBoard.tsx](file:///Users/gomserker/Desktop/card-derby/src/components/organisms/GameBoard.tsx)
 - プレイヤーフィルドとアクションフィルドの統合
 - 進行カード（1.2倍サイズ）の配置
@@ -243,7 +243,7 @@ src/
 
 ---
 
-### フェーズ6: カードアニメーションの実装
+### フェーズ6: カードアニメーションの実装 (完了)
 
 > [!IMPORTANT]
 > Moleculeレベルでカードの表裏アニメーションを実装します。
@@ -274,7 +274,7 @@ src/
 
 ---
 
-### フェーズ7: Pages & Library
+### フェーズ7: Pages & Library (進行中)
 #### [NEW] [GamePage.tsx](file:///Users/gomserker/Desktop/card-derby/src/pages/GamePage.tsx)
 - メインゲームページ
 - ライブラリページへの切り替えボタン

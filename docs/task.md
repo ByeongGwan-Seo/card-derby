@@ -25,12 +25,12 @@
   - [x] Cardアニメーション実装
   - [x] PlayerCard移動アニメーション補完 (`layoutId`) & Z-index修正
 
-- [ ] **Phase 7: Pages & Library**
+- [x] **Phase 7: Pages & Library**
   - [x] LibraryPage作成 (`pages/LibraryPage.tsx`)
-  - [ ] **[NEW]** TanStack Router導入 (`@tanstack/react-router`)
-  - [ ] **[NEW]** ルート定義 (URL-Driven Modal / Slide-over)
-  - [ ] GamePage作成 (`pages/GamePage.tsx`)
-  - [ ] App.tsx更新 (RouterProvider)
+  - [x] **[NEW]** TanStack Router導入 (`@tanstack/react-router`)
+  - [x] **[NEW]** ルート定義 (URL-Driven Modal / Slide-over)
+  - [x] GamePage作成 (`pages/GamePage.tsx`)
+  - [x] App.tsx更新 (RouterProvider)
 
 - [ ] **Phase 8: 検証**
   - [ ] 自動テスト/動作確認

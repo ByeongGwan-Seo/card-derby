@@ -276,7 +276,7 @@ src/
 
 ---
 
-### フェーズ7: Pages & Library (進行中)
+### フェーズ7: Pages & Library (完了)
 #### [NEW] ルーター導入
 - パッケージ追加: `@tanstack/react-router`, `@tanstack/router-devtools`
 - ルーティング設定:

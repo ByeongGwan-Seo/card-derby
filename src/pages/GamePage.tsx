@@ -1,10 +1,11 @@
 import { Link } from '@tanstack/react-router'
 import { GameBoard } from '../components/organisms'
+import { GameResult } from '../components/molecules'
 import { useGameLogic } from '../hooks/useGameLogic'
 import { Button } from '../components/atoms'
 
 export const GamePage = () => {
-    const { gameState, handleProceedingCardClick, handleActionCardClick } = useGameLogic()
+    const { gameState, handleProceedingCardClick, handleActionCardClick, resetGame } = useGameLogic()
 
     return (
         <div className="h-screen w-screen bg-stone-100 flex flex-col relative overflow-hidden">
@@ -32,6 +33,14 @@ export const GamePage = () => {
                     />
                 </div>
             </main>
+
+            {/* ゲーム結果モーダル */}
+            {gameState.winner && (
+                <GameResult
+                    winner={gameState.winner}
+                    onRestart={resetGame}
+                />
+            )}
         </div>
     )
 }

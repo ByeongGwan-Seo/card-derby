@@ -1,6 +1,5 @@
 import type { ActionCard } from '../../types' // 型定義
 import { Card, Tile } from '../atoms' // Atomsコンポーネント
-import { ACTION_CARD_ROWS } from '../../utils' // 定数
 
 /**
  * ActionFieldコンポーネントのプロパティ
@@ -9,7 +8,8 @@ interface ActionFieldProps {
     actionCards: ActionCard[] // アクションカード配列
     onCardClick?: (cardId: string) => void // カードクリックハンドラー
     className?: string // 追加のCSSクラス
-    children?: React.ReactNode // R6（デッキ置き場）に表示するコンポーネント
+    children?: React.ReactNode // 追加コンテンツ (ProceedingCardAreaなど)
+    layoutIdPrefix?: string
 }
 
 /**
@@ -20,7 +20,8 @@ export const ActionField = ({
     actionCards,
     onCardClick,
     className = '',
-    children
+    children,
+    layoutIdPrefix = ''
 }: ActionFieldProps) => {
     // 指定行のカードを取得
     const getCardAtRow = (row: number) => {
@@ -33,7 +34,7 @@ export const ActionField = ({
             <div className="flex flex-col rounded-lg overflow-hidden border-4 border-field-purple-600">
                 {[1, 2, 3, 4, 5, 6].map(row => {
                     const card = getCardAtRow(row)
-                    const hasCard = ACTION_CARD_ROWS.includes(row)
+
 
                     // Row 6 is where the deck (ProceedingCardArea) goes
                     if (row === 6 && children) {
@@ -53,14 +54,17 @@ export const ActionField = ({
                             row={row}
                             className={`rounded-none border-0 ${card?.clickable ? 'ring-4 ring-yellow-400 ring-opacity-70 animate-pulse z-10' : ''}`}
                         >
-                            {hasCard && card && (
+                            {/* カードがある場合は表示 */}
+                            {card && (
                                 <Card
                                     suit={card.suit}
                                     state={card.state}
                                     size="normal"
                                     cardType="action"
-                                    animationType="flip" // アクションカードはFlipアニメーション（必須）
-                                    onClick={() => onCardClick?.(card.id)}
+                                    animationType="flip" // ActionCardはフリップアニメーション
+                                    onClick={() => card.clickable && onCardClick?.(card.id)}
+                                    className={card.clickable ? 'cursor-pointer hover:brightness-110' : ''}
+                                    layoutId={`${layoutIdPrefix}${card.id}`}
                                 />
                             )}
                         </Tile>

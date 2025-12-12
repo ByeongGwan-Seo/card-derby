@@ -9,6 +9,7 @@ interface PlayerFieldProps {
     playerCards: PlayerCard[] // プレイヤーカード配列
     onCardClick?: (cardId: string) => void // カードクリックハンドラー
     className?: string // 追加のCSSクラス
+    layoutIdPrefix?: string // プレフィックス追加
 }
 
 /**
@@ -18,7 +19,8 @@ interface PlayerFieldProps {
 export const PlayerField = ({
     playerCards,
     onCardClick,
-    className = ''
+    className = '',
+    layoutIdPrefix = ''
 }: PlayerFieldProps) => {
     // 各タイルにカードがあるかチェック
     const getCardAtPosition = (row: number, col: number) => {
@@ -56,7 +58,7 @@ export const PlayerField = ({
                                         state={card.state}
                                         size="normal"
                                         onClick={() => onCardClick?.(card.id)}
-                                        layoutId={card.id} // 移動アニメーション用ID
+                                        layoutId={`${layoutIdPrefix}${card.id}`} // プレフィックス適用
                                     />
                                 )}
                             </Tile>

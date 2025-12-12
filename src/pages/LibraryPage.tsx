@@ -40,6 +40,7 @@ const ActionFieldDemo = () => {
         <ActionField
             actionCards={cards}
             onCardClick={handleCardClick}
+            layoutIdPrefix="library-"
         />
     )
 }
@@ -59,6 +60,7 @@ const GameBoardDemo = () => {
                 const row = parseInt(cardId.split('-')[1])
                 handleActionCardClick(row)
             }}
+            layoutIdPrefix="library-"
         />
     )
 }
@@ -213,6 +215,7 @@ export const LibraryPage = () => {
                                         { id: '3', suit: 'clubs', position: { x: 3, y: 6 }, state: 'face-up' },
                                         { id: '4', suit: 'spades', position: { x: 4, y: 6 }, state: 'face-up' },
                                     ]}
+                                    layoutIdPrefix="library-"
                                 />
                             </div>
                         </div>

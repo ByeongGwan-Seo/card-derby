@@ -42,7 +42,7 @@ export function LibraryModal() {
 
             {/* スライドオーバーコンテンツ */}
             <motion.div
-                className="relative w-full max-w-2xl h-full bg-white shadow-2xl overflow-y-auto"
+                className="relative w-full md:w-1/2 h-full bg-white shadow-2xl overflow-y-auto"
                 initial={{ x: '100%' }}
                 animate={{ x: 0 }}
                 exit={{ x: '100%' }}

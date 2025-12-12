@@ -7,6 +7,7 @@ interface GameBoardProps {
     onProceedingCardClick: () => void
     onActionCardClick?: (cardId: string) => void // 追加
     onRestart?: () => void
+    layoutIdPrefix?: string
 }
 
 /**
@@ -18,7 +19,8 @@ export const GameBoard = ({
     gameState,
     onProceedingCardClick,
     onActionCardClick, // 受け取る
-    onRestart: _ // 未使用のため無効化
+    onRestart: _, // 未使用のため無効化
+    layoutIdPrefix = ''
 }: GameBoardProps) => {
     return (
         <div className="w-full h-screen max-h-screen overflow-hidden flex flex-col items-center justify-center bg-gray-100 p-4">
@@ -30,6 +32,7 @@ export const GameBoard = ({
                     <PlayerField
                         playerCards={gameState.playerCards}
                         className="shadow-xl"
+                        layoutIdPrefix={layoutIdPrefix}
                     />
                 </div>
 
@@ -39,6 +42,7 @@ export const GameBoard = ({
                         actionCards={gameState.actionCards}
                         onCardClick={onActionCardClick} // ActionFieldに渡す
                         className="shadow-xl"
+                        layoutIdPrefix={layoutIdPrefix}
                     >
                         {/* R6の位置に進行カードエリア(デッキ)を配置 */}
                         {/* Tileサイズと完全に一致させる */}

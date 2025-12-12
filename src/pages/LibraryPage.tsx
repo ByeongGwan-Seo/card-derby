@@ -2,6 +2,8 @@ import { useState } from 'react' // React hooks
 import { Card, Tile, Button } from '../components/atoms' // Atomsコンポーネント
 import { PlayerField, ActionField, GameResult, ProceedingCardArea } from '../components/molecules' // Moleculesコンポーネント
 import type { ActionCard } from '../types'
+import { GameBoard } from '../components/organisms'
+import { useGameLogic } from '../hooks/useGameLogic'
 
 /**
  * コンポーネントライブラリページ
@@ -37,6 +39,25 @@ const ActionFieldDemo = () => {
         <ActionField
             actionCards={cards}
             onCardClick={handleCardClick}
+        />
+    )
+}
+
+/**
+ * GameBoardデモコンポーネント
+ */
+const GameBoardDemo = () => {
+    const { gameState, handleProceedingCardClick, handleActionCardClick } = useGameLogic()
+
+    return (
+        <GameBoard
+            gameState={gameState}
+            onProceedingCardClick={handleProceedingCardClick}
+            onActionCardClick={(cardId) => {
+                // cardId format: "action-{row}"
+                const row = parseInt(cardId.split('-')[1])
+                handleActionCardClick(row)
+            }}
         />
     )
 }
@@ -278,11 +299,10 @@ export const LibraryPage = () => {
                         <h2 className="text-3xl font-bold text-gray-800 mb-2">Organisms</h2>
                         <p className="text-gray-600 mb-8">大規模コンポーネント（GameBoard等）</p>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            <div className="p-6 border-2 border-gray-200 rounded-xl bg-gray-50 hover:border-indigo-500 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                                <h3 className="text-xl font-semibold text-indigo-600 mb-2">GameBoard</h3>
-                                <p className="text-gray-600 text-sm">ゲームボードコンポーネント - 実装予定</p>
-                            </div>
+                        <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 bg-gray-50/50">
+                            <h3 className="text-xl font-semibold text-indigo-600 mb-6 text-center">GameBoard Preview</h3>
+                            {/* GameBoardデモ */}
+                            <GameBoardDemo />
                         </div>
                     </section>
                 )}

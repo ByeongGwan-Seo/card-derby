@@ -1,6 +1,6 @@
 import type { PlayerCard } from '../../types' // 型定義
 import { Card, Tile } from '../atoms' // Atomsコンポーネント
-import { FIELD_ROWS, FIELD_COLS } from '../../utils' // 定数
+import { FIELD_ROWS, FIELD_COLS, GOAL_ROW } from '../../utils' // 定数
 
 /**
  * PlayerFieldコンポーネントのプロパティ
@@ -36,6 +36,7 @@ export const PlayerField = ({
             >
                 {Array.from({ length: FIELD_ROWS }, (_, rowIndex) => {
                     const row = rowIndex + 1 // 1-indexed
+                    const isGoalRow = row === GOAL_ROW
 
                     return Array.from({ length: FIELD_COLS }, (_, colIndex) => {
                         const col = colIndex + 1 // 1-indexed
@@ -44,7 +45,7 @@ export const PlayerField = ({
                         return (
                             <Tile
                                 key={`${row}-${col}`}
-                                type="player"
+                                type={isGoalRow ? 'goal' : 'player'}
                                 row={row}
                                 col={col}
                                 className="rounded-none border-0"

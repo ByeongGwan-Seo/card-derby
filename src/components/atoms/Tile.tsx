@@ -4,7 +4,7 @@ import { TILE_SIZE } from '../../utils' // 定数
  * タイルコンポーネントのプロパティ
  */
 interface TileProps {
-    type: 'player' | 'action' | 'proceeding' // タイルの種類
+    type: 'player' | 'action' | 'proceeding' | 'goal' // タイルの種類 (goal追加)
     row?: number // 行番号（表示用、オプション）
     col?: number // 列番号（表示用、オプション）
     className?: string // 追加のCSSクラス
@@ -26,7 +26,14 @@ export const Tile = ({
     const bgColor =
         type === 'player' ? 'bg-field-green-400' : // プレイヤーフィールド：緑系
             type === 'action' ? 'bg-field-purple-400' : // アクションフィールド：紫系
-                'bg-field-orange-400' // 進行カード：オレンジ系
+                type === 'proceeding' ? 'bg-field-orange-400' : // 進行カード：オレンジ系
+                    'bg-gray-800' // ゴール：基本色（パターンで上書き）
+
+    // ゴールタイルのスタイル（チェッカーフラッグパターン）
+    const goalStyle = type === 'goal' ? {
+        backgroundImage: 'conic-gradient(#333 90deg, #fff 90deg 180deg, #333 180deg 270deg, #fff 270deg)',
+        backgroundSize: '20px 20px'
+    } : {}
 
     return (
         <div
@@ -36,7 +43,11 @@ export const Tile = ({
         transition-all duration-200
         ${className}
       `}
-            style={{ width: `${TILE_SIZE.width}px`, height: `${TILE_SIZE.height}px` }}
+            style={{
+                width: `${TILE_SIZE.width}px`,
+                height: `${TILE_SIZE.height}px`,
+                ...goalStyle
+            }}
         >
             {/* デバッグ用の行列番号（オプション） */}
             {(row !== undefined || col !== undefined) && (

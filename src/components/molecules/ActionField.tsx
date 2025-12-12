@@ -9,6 +9,7 @@ interface ActionFieldProps {
     actionCards: ActionCard[] // アクションカード配列
     onCardClick?: (cardId: string) => void // カードクリックハンドラー
     className?: string // 追加のCSSクラス
+    children?: React.ReactNode // R6（デッキ置き場）に表示するコンポーネント
 }
 
 /**
@@ -18,7 +19,8 @@ interface ActionFieldProps {
 export const ActionField = ({
     actionCards,
     onCardClick,
-    className = ''
+    className = '',
+    children
 }: ActionFieldProps) => {
     // 指定行のカードを取得
     const getCardAtRow = (row: number) => {
@@ -32,6 +34,17 @@ export const ActionField = ({
                 {[1, 2, 3, 4, 5, 6].map(row => {
                     const card = getCardAtRow(row)
                     const hasCard = ACTION_CARD_ROWS.includes(row)
+
+                    // Row 6 is where the deck (ProceedingCardArea) goes
+                    if (row === 6 && children) {
+                        return (
+                            <div key={row} className="relative">
+                                {/* ProceedingCardArea is expected to maintain its own Tile-like appearance */}
+                                {/* Wrapper to ensure it fits into the grid flow if needed */}
+                                {children}
+                            </div>
+                        )
+                    }
 
                     return (
                         <Tile

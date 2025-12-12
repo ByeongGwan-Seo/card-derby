@@ -22,22 +22,23 @@ export const CARD_SIZE_MULTIPLIER = 1.2 // 進行カードのサイズ倍率
  */
 export const CARD_SIZES: Record<CardSize, { width: number; height: number }> = {
     normal: {
-        width: 90, // px
-        height: 160, // px (90 * 16/9)
+        width: 56, // px (approx 100 * 9/16)
+        height: 100, // px
     },
     large: {
-        width: 108, // px (90 * 1.2)
-        height: 192, // px (160 * 1.2)
+        width: 67, // px (56 * 1.2)
+        height: 120, // px (100 * 1.2)
     },
 }
 
 /**
  * タイルサイズ（カードより少し大きめ）
  * PlayerField(4列) + ActionField(1列) + 30px間隔で画面の60%以上を占める想定
+ * 画面内に収まるように調整 (100vh fit) -> 6行 * 130px = 780px
  */
 export const TILE_SIZE = {
-    width: 220, // px (画面幅の60%以上を占めるサイズ)
-    height: 200, // px (カードの通常サイズ + 余白)
+    width: 140, // px
+    height: 130, // px
 }
 
 /**

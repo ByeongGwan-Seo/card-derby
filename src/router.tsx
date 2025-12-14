@@ -27,6 +27,7 @@ const routeTree = rootRoute.addChildren([indexRoute, libraryRoute])
 export const router = createRouter({
     routeTree,
     defaultPreload: 'intent',
+    basepath: '/card-derby', // GitHub Pagesのベースパス
 })
 
 // Type safety registration

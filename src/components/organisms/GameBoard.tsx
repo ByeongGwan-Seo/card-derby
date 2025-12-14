@@ -23,7 +23,7 @@ export const GameBoard = ({
     layoutIdPrefix = ''
 }: GameBoardProps) => {
     return (
-        <div className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
+        <div className="w-full h-screen max-h-screen overflow-hidden flex flex-col items-center justify-center bg-gray-100 p-4">
             {/* ゲームボードコンテナ - items-startで上端(R1)を揃える */}
             <div className="flex flex-row gap-4 items-start">
 

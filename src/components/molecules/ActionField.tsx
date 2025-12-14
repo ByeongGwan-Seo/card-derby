@@ -1,6 +1,5 @@
 import type { ActionCard } from '../../types' // 型定義
 import { Card, Tile } from '../atoms' // Atomsコンポーネント
-import { FIELD_ROWS } from '../../utils' // 定数
 
 /**
  * ActionFieldコンポーネントのプロパティ
@@ -15,7 +14,7 @@ interface ActionFieldProps {
 
 /**
  * ActionFieldコンポーネント
- * 1xNのアクションカードフィールドを表示（2-(N-1)行目にカード配置）
+ * 1x6のアクションカードフィールドを表示（2-5行目にカード配置）
  */
 export const ActionField = ({
     actionCards,
@@ -29,19 +28,16 @@ export const ActionField = ({
         return actionCards.find(card => card.row === row)
     }
 
-    // 行リスト生成 [1, 2, ..., FIELD_ROWS]
-    const rows = Array.from({ length: FIELD_ROWS }, (_, i) => i + 1)
-
     return (
         <div className={`inline-block ${className}`}>
             {/* フィールドグリッド（縦1列） */}
             <div className="flex flex-col rounded-lg overflow-hidden border-4 border-field-purple-600">
-                {rows.map(row => {
+                {[1, 2, 3, 4, 5, 6].map(row => {
                     const card = getCardAtRow(row)
 
 
-                    // Last row is where the deck (ProceedingCardArea) goes
-                    if (row === FIELD_ROWS && children) {
+                    // Row 6 is where the deck (ProceedingCardArea) goes
+                    if (row === 6 && children) {
                         return (
                             <div key={row} className="relative">
                                 {/* ProceedingCardArea is expected to maintain its own Tile-like appearance */}

@@ -39,9 +39,6 @@ const createInitialGameState = (): GameState => {
         row3: false,
         row4: false,
         row5: false,
-        row6: false,
-        row7: false,
-        row8: false,
     }
 
     return {

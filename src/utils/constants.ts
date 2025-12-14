@@ -5,13 +5,13 @@ import type { Suit, CardSize } from '../types' // 型定義
  */
 
 // フィールド設定
-export const FIELD_ROWS = 9 // フィールドの行数
+export const FIELD_ROWS = 6 // フィールドの行数
 export const FIELD_COLS = 4 // フィールドの列数（プレイヤー数）
-export const START_ROW = 9 // スタート地点の行（下から上へ）
+export const START_ROW = 6 // スタート地点の行（下から上へ）
 export const GOAL_ROW = 1 // ゴール地点の行（上）
 
 // アクションカード設定
-export const ACTION_CARD_ROWS = [2, 3, 4, 5, 6, 7, 8] // アクションカードが配置される行
+export const ACTION_CARD_ROWS = [2, 3, 4, 5] // アクションカードが配置される行
 
 // カード設定
 export const CARD_ASPECT_RATIO = 9 / 16 // カードのアスペクト比（9:16）

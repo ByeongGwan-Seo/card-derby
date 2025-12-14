@@ -36,7 +36,7 @@ export const CARD_SIZES: Record<CardSize, { width: number; height: number }> = {
  * 10行が100vh内に収まるように調整 (Height = 90px)
  */
 export const TILE_SIZE = {
-    width: 85, // px
+    width: 110, // px
     height: 90, // px
 }
 

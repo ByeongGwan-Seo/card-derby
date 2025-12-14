@@ -32,8 +32,34 @@ export const GamePage = () => {
                     />
 
                     {/* メニューコンテンツ */}
-                    <div className="fixed top-16 right-4 z-50 bg-white rounded-lg shadow-xl p-6 min-w-[200px]">
-                        <h2 className="text-lg font-bold text-gray-800 mb-4">Trump Card Derby</h2>
+                    <div className="fixed top-16 right-4 z-50 bg-white rounded-lg shadow-xl p-6 min-w-[300px] max-w-[90vw] max-h-[80vh] overflow-y-auto">
+                        <h2 className="text-xl font-bold text-gray-800 mb-4 border-b pb-2">ゲームルール</h2>
+
+                        <div className="space-y-4 text-sm text-gray-700 mb-6">
+                            <section>
+                                <h3 className="font-bold text-gray-900 mb-1">🏃 移動ルール</h3>
+                                <ul className="list-disc pl-5 space-y-1">
+                                    <li>デッキからカードを1枚引きます。</li>
+                                    <li><strong>同じマーク:</strong> そのプレイヤーが1歩進みます。</li>
+                                    <li><strong>違うマーク:</strong> そのマーク以外の全員が1歩進みます。</li>
+                                </ul>
+                            </section>
+
+                            <section>
+                                <h3 className="font-bold text-gray-900 mb-1">⚡ アクションカード</h3>
+                                <ul className="list-disc pl-5 space-y-1">
+                                    <li>2〜9行目に配置されています。</li>
+                                    <li>全員がその行を通過するとめくられます。</li>
+                                    <li><strong>同じマーク:</strong> そのプレイヤーは1歩戻ります。</li>
+                                </ul>
+                            </section>
+
+                            <section>
+                                <h3 className="font-bold text-gray-900 mb-1">🏁 勝利条件</h3>
+                                <p>最初に1行目（ゴール）に到達した人が勝ちです！</p>
+                            </section>
+                        </div>
+
                         <Link to="/library" onClick={() => setMenuOpen(false)}>
                             <Button variant="outline" size="small" className="w-full">
                                 Library

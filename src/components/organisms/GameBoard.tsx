@@ -23,10 +23,8 @@ export const GameBoard = ({
     layoutIdPrefix = ''
 }: GameBoardProps) => {
     return (
-        <div className="w-full h-screen max-h-screen overflow-hidden flex flex-col items-center justify-center bg-gray-100 p-4">
-            {/* ゲームボードコンテナ - items-startで上端(R1)を揃える */}
-            <div className="flex flex-row gap-4 items-start">
-
+        <div className="w-full h-screen max-h-screen overflow-hidden flex items-center justify-center bg-gray-100">
+            <div className="flex flex-row gap-4 items-center">
                 {/* メインエリア：プレイヤーフィールド */}
                 <div className="flex-none">
                     <PlayerField
@@ -40,12 +38,11 @@ export const GameBoard = ({
                 <div className="flex-none">
                     <ActionField
                         actionCards={gameState.actionCards}
-                        onCardClick={onActionCardClick} // ActionFieldに渡す
+                        onCardClick={onActionCardClick}
                         className="shadow-xl"
                         layoutIdPrefix={layoutIdPrefix}
                     >
-                        {/* R6の位置に進行カードエリア(デッキ)を配置 */}
-                        {/* Tileサイズと完全に一致させる */}
+                        {/* R10の位置に進行カードエリア(デッキ)を配置 */}
                         <div style={{ width: `${TILE_SIZE.width}px`, height: `${TILE_SIZE.height}px` }}>
                             <ProceedingCardArea
                                 card={gameState.proceedingCard}

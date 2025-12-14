@@ -52,7 +52,7 @@ export const Card = ({
     `}>
             {suit && (
                 <>
-                    <div className="text-6xl font-bold">{SUIT_SYMBOLS[suit]}</div>
+                    <div className="text-3xl font-bold">{SUIT_SYMBOLS[suit]}</div>
                 </>
             )}
         </div>
@@ -61,7 +61,7 @@ export const Card = ({
     // 裏面コンテンツ
     const BackContent = () => (
         <div className="w-full h-full bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg border-2 border-indigo-700 flex items-center justify-center">
-            <span className="text-6xl">🐻</span>
+            <span className="text-3xl">🐻</span>
         </div>
     )
 

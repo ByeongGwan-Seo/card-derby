@@ -5,13 +5,13 @@ import type { Suit, CardSize } from '../types' // 型定義
  */
 
 // フィールド設定
-export const FIELD_ROWS = 6 // フィールドの行数
+export const FIELD_ROWS = 10 // フィールドの行数
 export const FIELD_COLS = 4 // フィールドの列数（プレイヤー数）
-export const START_ROW = 6 // スタート地点の行（下から上へ）
+export const START_ROW = 10 // スタート地点の行（下から上へ）
 export const GOAL_ROW = 1 // ゴール地点の行（上）
 
 // アクションカード設定
-export const ACTION_CARD_ROWS = [2, 3, 4, 5] // アクションカードが配置される行
+export const ACTION_CARD_ROWS = [2, 3, 4, 5, 6, 7, 8, 9] // アクションカードが配置される行
 
 // カード設定
 export const CARD_ASPECT_RATIO = 9 / 16 // カードのアスペクト比（9:16）
@@ -22,23 +22,22 @@ export const CARD_SIZE_MULTIPLIER = 1.2 // 進行カードのサイズ倍率
  */
 export const CARD_SIZES: Record<CardSize, { width: number; height: number }> = {
     normal: {
-        width: 56, // px (approx 100 * 9/16)
-        height: 100, // px
+        width: 45, // px
+        height: 75, // px
     },
     large: {
-        width: 67, // px (56 * 1.2)
-        height: 120, // px (100 * 1.2)
+        width: 54, // px (45 * 1.2)
+        height: 90, // px (75 * 1.2)
     },
 }
 
 /**
  * タイルサイズ（カードより少し大きめ）
- * PlayerField(4列) + ActionField(1列) + 30px間隔で画面の60%以上を占める想定
- * 画面内に収まるように調整 (100vh fit) -> 6行 * 130px = 780px
+ * 10行が100vh内に収まるように調整 (Height = 90px)
  */
 export const TILE_SIZE = {
-    width: 140, // px
-    height: 130, // px
+    width: 85, // px
+    height: 90, // px
 }
 
 /**

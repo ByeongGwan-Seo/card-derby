@@ -61,6 +61,10 @@ export interface ActionHistory {
     row3: boolean // 3行目のアクションカード発動済み
     row4: boolean // 4行目のアクションカード発動済み
     row5: boolean // 5行目のアクションカード発動済み
+    row6: boolean // 6行目のアクションカード発動済み
+    row7: boolean // 7行目のアクションカード発動済み
+    row8: boolean // 8行目のアクションカード発動済み
+    row9: boolean // 9行目のアクションカード発動済み
 }
 
 /**

@@ -15,7 +15,8 @@ const createInitialGameState = (): GameState => {
     }))
 
     // アクションカード（シャッフル）
-    const shuffledSuits = [...SUITS].sort(() => Math.random() - 0.5)
+    // 8枚のアクションカードのため、SUITSを2回繰り返してシャッフル
+    const shuffledSuits = [...SUITS, ...SUITS].sort(() => Math.random() - 0.5)
     // 初期状態では clickable: false (まだ誰も到達していない)
     const actionCards: ActionCard[] = ACTION_CARD_ROWS.map((row, index) => ({
         id: `action-${row}`,
@@ -39,6 +40,10 @@ const createInitialGameState = (): GameState => {
         row3: false,
         row4: false,
         row5: false,
+        row6: false,
+        row7: false,
+        row8: false,
+        row9: false,
     }
 
     return {

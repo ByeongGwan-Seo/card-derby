@@ -41,7 +41,6 @@ export const GamePage = () => {
                                 <ul className="list-disc pl-5 space-y-1">
                                     <li>デッキからカードを1枚引きます。</li>
                                     <li><strong>同じマーク:</strong> そのプレイヤーが1歩進みます。</li>
-                                    <li><strong>違うマーク:</strong> そのマーク以外の全員が1歩進みます。</li>
                                 </ul>
                             </section>
 
@@ -49,7 +48,7 @@ export const GamePage = () => {
                                 <h3 className="font-bold text-gray-900 mb-1">⚡ アクションカード</h3>
                                 <ul className="list-disc pl-5 space-y-1">
                                     <li>2〜9行目に配置されています。</li>
-                                    <li>全員がその行を通過するとめくられます。</li>
+                                    <li>全員がその行を通過すると、<strong>手動で</strong>クリックしてめくることができます。</li>
                                     <li><strong>同じマーク:</strong> そのプレイヤーは1歩戻ります。</li>
                                 </ul>
                             </section>
